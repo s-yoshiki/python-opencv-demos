@@ -2,10 +2,10 @@ import cv2
 import numpy as np 
 
 #img = cv2.imread('lena.png')
-img = cv2.imread("/Users/yoshiki/Pictures/el.png")
+img = cv2.imread("./lena.png")
 
-for i in range(3200):
-	for j in range(5120):
+for i in range(512):
+	for j in range(512):
 		pix = img[i][j]
 		th = pix[0]/3.0+pix[1]/3.0+pix[2]/3.0
 		pix[0] = 255
