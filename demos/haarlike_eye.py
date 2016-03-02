@@ -38,12 +38,14 @@ cascade = cv2.CascadeClassifier(cascade_folder+cascade_path)
 
 def capture_camera(mirror=True, size=None):
     try:
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(1)
     except:
         print "camera was not found"
 
     cv2.namedWindow('camera capture')
     color = (0, 200, 2)
+    eye = 0
+
     while True:
         try:
             ret,frame = cap.read()
@@ -53,16 +55,16 @@ def capture_camera(mirror=True, size=None):
             cap = cv2.VideoCapture(1)
             ret,frame = cap.read()
             frame2 = frame.copy()
-        
 
-        
+
+
         if len(frame.shape) == 3:
             height, width, channels = frame.shape[:3]
         else:
             height, width = frame.shape[:2]
             channels = 1
 
-        
+
         if mirror is True:
             frame = frame[:,::-1]
             frame = cv2.flip(frame,1)
@@ -81,7 +83,7 @@ def capture_camera(mirror=True, size=None):
                 y1 = rect[0]
                 w1 = rect[3]
                 h1 = rect[2]
-                #eye = frame[x1:x1+w1,y1:y1+h1]
+                eye = frame[x1:x1+w1,y1:y1+h1]
                 #eye = cv2.cvtColor(eye, cv2.COLOR_BGR2GRAY)
 
                 try:
@@ -91,9 +93,10 @@ def capture_camera(mirror=True, size=None):
 
 
 
-        cv2.imshow('camera capture', frame2)
+        #cv2.imshow('camera capture', frame2)
         k = cv2.waitKey(1)
         if k == 27:
+            cv2.imwrite("eye.png", eye)
             break
 
     cap.release()
